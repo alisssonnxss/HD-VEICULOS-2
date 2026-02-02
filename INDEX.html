@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HD VEÍCULOS | Premium Selection</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,700;0,900;1,900&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
+        
+        :root { --hd-blue: #1E40AF; --hd-gold: #fbbf24; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f1f5f9; color: #0F172A; }
+        .font-brand { font-family: 'Montserrat', sans-serif; }
+
+        /* Background de Luxo Animado */
+        .hero-gradient {
+            background: linear-gradient(-45deg, #0f172a, #1e3a8a, #1e40af, #0f172a);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient { 0% {background-position: 0% 50%;} 50% {background-position: 100% 50%;} 100% {background-position: 0% 50%;} }
+
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .car-card { transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        .car-card:hover { transform: translateY(-12px); box-shadow: 0 30px 60px -12px rgba(30, 64, 175, 0.25); }
+        
+        [x-cloak] { display: none !important; }
+    </style>
+</head>
+<body x-data="hdApp()">
+
+    <nav class="sticky top-0 z-[100] glass py-4 px-6 md:px-20 border-b-2 border-blue-600">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex flex-col">
+                <h1 class="text-blue-800 text-2xl md:text-4xl font-brand font-black italic leading-none uppercase">HD <span class="text-slate-900">VEÍCULOS</span></h1>
+                <div class="flex gap-1 text-[8px] font-bold text-blue-600 uppercase tracking-widest mt-1">
+                    <span>Compra</span>•<span>Venda</span>•<span>Troca</span>•<span>Financia</span>
+                </div>
+            </div>
+            
+            <div class="hidden lg:flex gap-8 font-extrabold text-[10px] uppercase tracking-widest text-slate-600">
+                <a href="#estoque" class="hover:text-blue-600 transition">Estoque</a>
+                <a href="#servicos" class="hover:text-blue-600 transition">Nossos Serviços</a>
+                <a href="#sobre" class="hover:text-blue-600 transition">Sobre</a>
+            </div>
+
+            <a href="https://wa.me/5538998898444" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl text-[11px] font-black uppercase transition-all shadow-lg flex items-center gap-3">
+                <i class="fa-brands fa-whatsapp text-lg"></i> Falar com Vendedor
+            </a>
+        </div>
+    </nav>
+
+    <header class="hero-gradient py-24 md:py-32 px-6 text-white overflow-hidden relative">
+        <div class="max-w-7xl mx-auto relative z-10 flex flex-col md:flex-row items-center gap-16">
+            <div class="md:w-1/2 text-center md:text-left" data-aos="fade-right">
+                <span class="bg-blue-500/20 text-blue-300 px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest mb-6 inline-block border border-blue-500/30">Lontra - Minas Gerais</span>
+                <h2 class="text-6xl md:text-8xl font-brand font-black mb-8 leading-[0.9] italic uppercase">Melhores <br><span class="text-blue-400">Preços</span></h2>
+                <p class="text-blue-100/80 text-xl mb-12 font-light italic">A maior vitrine de seminovos selecionados do Norte de Minas. Seu próximo carro está aqui.</p>
+                <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                    <a href="#estoque" class="bg-white text-blue-900 px-10 py-5 rounded-2xl font-black uppercase text-xs hover:scale-105 transition shadow-2xl">Ver Estoque</a>
+                    <a href="#servicos" class="bg-transparent border-2 border-white/30 text-white px-10 py-5 rounded-2xl font-black uppercase text-xs hover:bg-white/10 transition">Nossos Serviços</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative" data-aos="zoom-in">
+                <div class="absolute -inset-10 bg-blue-500/20 rounded-full blur-[100px]"></div>
+                <img src="FTS/FTS/Captura de tela 2026-01-29 183813.png" class="relative z-10 rounded-[40px] shadow-2xl border-4 border-white/10">
+            </div>
+        </div>
+    </header>
+
+    <section id="servicos" class="max-w-7xl mx-auto -mt-20 relative z-20 px-6">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <template x-for="servico in servicos">
+                <div class="glass p-8 rounded-[32px] shadow-xl hover:bg-blue-600 hover:text-white transition-all duration-500 group">
+                    <div class="w-14 h-14 bg-blue-100 rounded-2xl flex items-center justify-center text-blue-600 mb-6 group-hover:bg-white/20 group-hover:text-white transition">
+                        <i :class="servico.icon" class="text-2xl"></i>
+                    </div>
+                    <h4 class="font-brand font-black uppercase text-sm mb-2" x-text="servico.titulo"></h4>
+                    <p class="text-xs text-slate-500 group-hover:text-blue-100 leading-relaxed" x-text="servico.desc"></p>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <section id="estoque" class="max-w-7xl mx-auto py-32 px-6">
+        <div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+            <div data-aos="fade-right">
+                <h3 class="text-slate-900 font-brand font-black text-5xl italic uppercase leading-none">Showroom <br><span class="text-slate-300">Exclusivo</span></h3>
+                <div class="h-2 w-24 bg-blue-600 mt-4 rounded-full"></div>
+            </div>
+            
+            <div class="flex bg-white p-2 rounded-2xl shadow-inner border border-slate-100" data-aos="fade-left">
+                <template x-for="cat in categorias">
+                    <button @click="filtro = cat" 
+                            :class="filtro === cat ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-blue-600'" 
+                            class="px-6 py-3 rounded-xl text-[10px] font-black uppercase transition-all" x-text="cat"></button>
+                </template>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <template x-for="car in filteredCars()" :key="car.id">
+                <div class="car-card bg-white rounded-[40px] border border-slate-100 overflow-hidden shadow-sm group">
+                    <div class="relative h-64 overflow-hidden">
+                        <img :src="car.images[0]" class="w-full h-full object-cover group-hover:scale-110 transition duration-1000">
+                        <div class="absolute top-5 left-5 flex gap-2">
+                            <span class="bg-white/90 backdrop-blur text-slate-900 text-[9px] font-black px-3 py-1 rounded-lg uppercase shadow-sm" x-text="car.ano"></span>
+                        </div>
+                        <div class="absolute top-5 right-5" x-show="car.vendido">
+                            <span class="bg-red-600 text-white text-[9px] font-black px-4 py-2 rounded-full animate-pulse shadow-lg">VENDIDO</span>
+                        </div>
+                    </div>
+
+                    <div class="p-8 text-left">
+                        <h4 class="font-brand font-black text-xl text-slate-900 uppercase truncate" x-text="car.nome"></h4>
+                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-widest mt-2 flex items-center gap-2">
+                            <i class="fa-solid fa-road text-blue-500"></i> <span x-text="car.km + ' KM'"></span>
+                        </p>
+                        
+                        <div class="mt-8 pt-6 border-t border-slate-50 flex justify-between items-center">
+                            <div>
+                                <p class="text-[9px] text-blue-600 font-black uppercase">Oportunidade</p>
+                                <p class="text-2xl font-black text-slate-900" x-text="'R$ ' + car.preco.toLocaleString('pt-BR')"></p>
+                            </div>
+                            <button @click="openModal(car)" class="bg-slate-900 text-white px-6 py-4 rounded-2xl text-[10px] font-black uppercase hover:bg-blue-600 transition-all transform active:scale-95 shadow-xl">
+                                Negociar
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+        </div>
+    </section>
+
+    <div x-show="isModalOpen" x-cloak class="fixed inset-0 z-[1000] flex items-center justify-center p-4 md:p-6" x-transition>
+        <div class="modal-bg absolute inset-0 bg-slate-950/90 backdrop-blur-xl" @click="isModalOpen = false"></div>
+        
+        <div class="bg-white w-full max-w-6xl rounded-[48px] overflow-hidden relative z-10 flex flex-col md:flex-row shadow-2xl max-h-[90vh]">
+            <div class="md:w-3/5 relative bg-black group/modal" x-data="{ mImg: 0 }">
+                <template x-for="(img, idx) in selectedCard.images" :key="idx">
+                    <img :src="img" x-show="mImg === idx" class="w-full h-full object-cover">
+                </template>
+                
+                <div class="absolute inset-0 flex items-center justify-between px-6 opacity-0 group-hover/modal:opacity-100 transition-opacity">
+                    <button @click="mImg = mImg > 0 ? mImg - 1 : selectedCard.images.length - 1" class="w-14 h-14 bg-white/20 hover:bg-white text-white hover:text-slate-900 rounded-full backdrop-blur-md transition flex items-center justify-center"><i class="fa-solid fa-arrow-left"></i></button>
+                    <button @click="mImg = mImg < selectedCard.images.length - 1 ? mImg + 1 : 0" class="w-14 h-14 bg-white/20 hover:bg-white text-white hover:text-slate-900 rounded-full backdrop-blur-md transition flex items-center justify-center"><i class="fa-solid fa-arrow-right"></i></button>
+                </div>
+
+                <div class="absolute bottom-8 left-0 right-0 flex justify-center gap-3">
+                    <template x-for="(img, idx) in selectedCard.images" :key="idx">
+                        <div @click="mImg = idx" class="w-16 h-16 rounded-2xl border-2 cursor-pointer overflow-hidden transition-all shadow-2xl" :class="mImg === idx ? 'border-blue-500 scale-110' : 'border-white/50'">
+                            <img :src="img" class="w-full h-full object-cover">
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <div class="md:w-2/5 p-10 md:p-14 overflow-y-auto">
+                <button @click="isModalOpen = false" class="absolute top-8 right-8 text-slate-400 hover:text-red-500 transition"><i class="fa-solid fa-xmark text-2xl"></i></button>
+                
+                <span class="text-blue-600 font-black text-xs uppercase tracking-[0.4em]">Ficha Técnica</span>
+                <h2 class="text-4xl font-brand font-black text-slate-900 uppercase italic my-6 leading-none" x-text="selectedCard.nome"></h2>
+                
+                <div class="grid grid-cols-2 gap-4 mb-8 text-left">
+                    <div class="bg-slate-50 p-5 rounded-3xl border border-slate-100">
+                        <i class="fa-solid fa-calendar-days text-blue-600 mb-2"></i>
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Ano/Modelo</p>
+                        <p class="font-black text-slate-800" x-text="selectedCard.ano"></p>
+                    </div>
+                    <div class="bg-slate-50 p-5 rounded-3xl border border-slate-100">
+                        <i class="fa-solid fa-tachometer-alt text-blue-600 mb-2"></i>
+                        <p class="text-[9px] text-slate-400 font-bold uppercase tracking-widest">Quilometragem</p>
+                        <p class="font-black text-slate-800" x-text="selectedCard.km + ' KM'"></p>
+                    </div>
+                </div>
+
+                <div class="space-y-6 mb-10 text-left">
+                    <div>
+                        <h5 class="text-[10px] font-black uppercase text-slate-400 mb-3 tracking-widest">Opcionais do Veículo</h5>
+                        <p class="text-slate-600 text-sm leading-relaxed italic" x-text="selectedCard.descLonga"></p>
+                    </div>
+                    <div class="flex items-center gap-4 text-[10px] font-black uppercase text-green-600">
+                        <i class="fa-solid fa-check-double"></i> Periciado e Aprovado
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between mb-10">
+                    <div>
+                        <p class="text-xs text-blue-600 font-black uppercase mb-1">Valor Exclusivo</p>
+                        <p class="text-5xl font-black text-slate-900 tracking-tighter" x-text="'R$ ' + selectedCard.preco?.toLocaleString('pt-BR')"></p>
+                    </div>
+                </div>
+
+                <a :href="'https://wa.me/5538998898444?text=Olá Cida, tenho interesse no veículo ' + selectedCard.nome + ' que vi no site de luxo. Podemos negociar?'" 
+                   class="flex items-center justify-center gap-4 w-full bg-green-600 hover:bg-green-700 text-white py-6 rounded-[24px] font-black uppercase text-xs transition-all shadow-2xl shadow-green-200 transform hover:scale-[1.03]">
+                    <i class="fa-brands fa-whatsapp text-2xl"></i>
+                    Negociar 
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-slate-950 text-white pt-24 pb-12 px-6">
+        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-20 mb-20 text-left">
+            <div>
+                <h2 class="text-3xl font-brand font-black italic mb-8 uppercase">HD <span class="text-blue-500">VEÍCULOS</span></h2>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">Especialistas em realizar sonhos. Transparência e qualidade em cada quilômetro rodado.</p>
+                <div class="flex gap-4">
+                    <a href="#" class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-instagram text-xl"></i></a>
+                    <a href="#" class="w-12 h-12 bg-white/5 rounded-2xl flex items-center justify-center hover:bg-blue-600 transition"><i class="fa-brands fa-whatsapp text-xl"></i></a>
+                </div>
+            </div>
+            
+            <div class="space-y-6">
+                <h4 class="text-blue-500 font-black uppercase text-[10px] tracking-widest">Onde Estamos</h4>
+                <p class="text-slate-400 text-sm italic leading-loose">
+                    Lontra, Minas Gerais - Norte de Minas.<br>
+                    Atendimento de Seg. a Sáb.
+                </p>
+                <div class="text-2xl font-black text-white">(38) 9 9889-8444</div>
+            </div>
+
+            <div class="bg-blue-600 p-10 rounded-[40px]">
+                <h4 class="text-white font-black italic uppercase mb-4">Financiamento</h4>
+                <p class="text-blue-100 text-sm mb-6 leading-relaxed">As melhores taxas do mercado. Trabalhamos com todos os bancos para garantir a menor parcela para você.</p>
+                <a href="#" class="bg-white text-blue-600 px-6 py-4 rounded-2xl font-black uppercase text-[10px] inline-block shadow-lg">Simular Agora</a>
+            </div>
+        </div>
+        <div class="text-center pt-12 border-t border-white/5 text-[9px] font-bold text-slate-700 uppercase tracking-[0.5em]">© 2026 HD VEÍCULOS - LUXO E PROCEDÊNCIA</div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ duration: 1000, once: true });
+        
+        function hdApp() {
+            return {
+                isModalOpen: false,
+                selectedCard: {},
+                filtro: 'TODOS',
+                categorias: ['TODOS', 'PICK-UP', 'SUV', 'HATCH'],
+                servicos: [
+                    { titulo: 'Compra', icon: 'fa-solid fa-money-bill-wave', desc: 'Compramos seu veículo com pagamento à vista e avaliação justa.' },
+                    { titulo: 'Venda', icon: 'fa-solid fa-car', desc: 'Estoque selecionado com garantia de procedência e revisão.' },
+                    { titulo: 'Troca', icon: 'fa-solid fa-repeat', desc: 'Troca com troco ou upgrade. Aceitamos seu usado como entrada.' },
+                    { titulo: 'Financia', icon: 'fa-solid fa-hand-holding-dollar', desc: 'Taxas reduzidas e aprovação rápida em diversos bancos.' }
+                ],
+                cars: [
+                    { 
+                        id: 1, 
+                        nome: "Xt660", 
+                        cat: "MOTOS",
+                        ano: "", 
+                        km: "00.000", 
+                        preco: 30000, 
+                        descLonga: "Venda ou troca.",
+                        images: [
+                            "FTS/FTS/foto xt 3.png",
+                            "FTS/FTS/foto xt 2.png",
+                            "FTS/FTS/foto xt.png"
+                        ], 
+                        vendido: false 
+                    },
+                    { 
+                        id: 2, 
+                        nome: "Jeep Renegade S", 
+                        cat: "SUV",
+                        ano: "2022/2022", 
+                        km: "28.000", 
+                        preco: 124900, 
+                        descLonga: "Teto Solar Panorâmico, Motor Turbo Flex, Rodas aro 19, Park Assist, Frenagem Autônoma, Interior em Couro, Faróis Full LED.",
+                        images: [
+                            "FTS/FTS/Captura de tela 2026-01-29 031813.png",
+                            "FTS/FTS/Captura de tela 2026-01-29 031845.png"
+                        ], 
+                        vendido: false 
+                    },
+                    { 
+                        id: 3, 
+                        nome: "Siena", 
+                        cat: "1.0",
+                        ano: "2009", 
+                        km: "0", 
+                        preco: 0, 
+                        descLonga: "Câmbio Automático, Zero KM, Pronta entrega, Multimídia Wireless, Faróis em LED, Volante multifuncional.",
+                        images: [
+                            "FTS/FTS/Captura de tela 2026-01-29 031726.png",
+                            "FTS/FTS/Captura de tela 2026-01-29 031741.png"
+                        ], 
+                        vendido: false 
+                    },
+                    { 
+                        id: 4, 
+                        nome: "VW Gol 1.6 MSI", 
+                        cat: "HATCH",
+                        ano: "2021/2022", 
+                        km: "42.000", 
+                        preco: 58900, 
+                        descLonga: "Completo, Direção Hidráulica, Ar Condicionado, Vidros Elétricos, Alarme, Sensor de Ré, Carro revisado com garantia.",
+                        images: [
+                            "FTS/FTS/Captura de tela 2026-01-29 183813.png",
+                            "FTS/FTS/Captura de tela 2026-01-29 183813.png"
+                        ], 
+                        vendido: true 
+                    }
+                ],
+                openModal(car) {
+                    this.selectedCard = car;
+                    this.isModalOpen = true;
+                },
+                filteredCars() {
+                    if (this.filtro === 'TODOS') return this.cars;
+                    return this.cars.filter(c => c.cat === this.filtro);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
